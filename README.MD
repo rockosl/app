@@ -1,17 +1,17 @@
-# Passos para implementar code deploy na AWS:
+# Passos para implementar code deploy na AWS
 
-`IAM:`
-- Função para code deploy EC2
-- Função EC2 para bucket S3 -*Read only*
+**IAM:**
+- Criar função para code deploy EC2
+- Criar função EC2 para bucket S3 *Read only*
 ***
 
-`S3:`
+**S3:**
 - Criar bucket para deploy
 ***
 
-`EC2:`
+**EC2:**
 - Ao criar instância definir função IAM de leitura bucket S3 criado anteriormente
-- Instalar agente do code deploy na instância 
+- Instalar agente do code deploy nas instâncias
     - Referências: [Code deploy AWS](https://docs.aws.amazon.com/pt_br/codedeploy/latest/userguide/codedeploy-agent-operations-install.html)
 		
 > Comandos: 
@@ -19,23 +19,23 @@
 - `sudo yum install ruby`
 - `sudo yum install wget`
 - `cd /home/ec2-user`
-- `wget https:// **NOME BUCKET** .s3. **REGIÃO** .amazonaws.com/latest/install`
-  * Referências: [Nome dos buckets e regiões na AWS](https://docs.aws.amazon.com/pt_br/codedeploy/latest/userguide/resource-kit.html#resource-kit-bucket-names)
+- `wget https:// *NOME BUCKET* .s3. *REGIÃO* .amazonaws.com/latest/install`
+	- Referências: [Nome dos buckets e regiões na AWS](https://docs.aws.amazon.com/pt_br/codedeploy/latest/userguide/resource-kit.html#resource-kit-bucket-names)
 - `chmod +x ./install`
 - `sudo ./install auto`
 - `sudo service codedeploy-agent status` (para confirmar se está rodando)
 - `sudo service codedeploy-agent start` (caso não tenha iniciado)
 ***
 
-`CODE DEPLOY:`
-- Criar aplicativo Plataforma EC2
+**CODE DEPLOY:**
+- Criar aplicativo, plataforma EC2
 - Criar grupo de implantação dentro do aplicativo
-	* Selecionar função code deploy criada anteriormente aqui
+	- Selecionar função code deploy criada anteriormente aqui
 - Selecionar Instancias ec2 através das tags ou grupos de auto scaling
 - Pode ser utilizado load balance para não cair a aplicação aqui
 - Pode ser configurado reversão caso dê problema
 			
-- Criar arquivo appspec.yml
+- Criar arquivo appspec.yml na raiz do projeto [Exemplo](https://github.com/rockosl/app/blob/master/appspec.yml)
 - Verificar se apache está rodando se não instalar 
 
 > Comandos: 
@@ -46,4 +46,4 @@
 - Criar implantação dentro do grupo e selecionar caminho URL do app no bucket S3
 ***
 
-`IMPORTANTE:` Caso usado mais de uma instância verificar grupos de auto scaling dentro do grupo da aplicação
+**IMPORTANTE:** Caso usado mais de uma instância verificar grupos de auto scaling dentro do grupo da aplicação
