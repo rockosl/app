@@ -1,15 +1,15 @@
 # Passos para implementar code deploy na AWS:
 
-*IAM*
-- Função para code deoploy EC2
-- Função EC2 para bucket S3 - Read only
+`*IAM:*`
+- Função para code deploy EC2
+- Função EC2 para bucket S3 (Read only)
 
-*S3*
+`*S3:*`
 - Criar bucket para deploy
 
-*EC2*
+`*EC2:*`
 - Ao criar instância definir função IAM de leitura bucket S3 criado anteriormente
-- Instalar Agente do code deploy na instância (https://docs.aws.amazon.com/pt_br/codedeploy/latest/userguide/codedeploy-agent-operations-install.html)
+- Instalar agente do code deploy na instância (https://docs.aws.amazon.com/pt_br/codedeploy/latest/userguide/codedeploy-agent-operations-install.html)
 		
 > Commandos: 
 * sudo yum update
@@ -23,7 +23,7 @@
 * sudo service codedeploy-agent status (para confirmar se está rodando)
 * sudo service codedeploy-agent start (caso não tenha iniciado)
 
-*Code doploy* 
+`*CODE DEPLOY:*`
 - Criar aplicativo Plataforma EC2
 - Criar grupo de implantação dentro do aplicativo
 	* Selecionar função code deploy criada anteriormente aqui
@@ -34,10 +34,11 @@
 - Criar arquivo appspec.yml
 - Verificar se apache está rodando se não instalar 
 
-> comandos: - sudo yum install httpd
-- sudo systemctl start httpd.service
-- sudo systemctl enable httpd.service
+> comandos: 
+* sudo yum install httpd
+* sudo systemctl start httpd.service
+* sudo systemctl enable httpd.service
 
 - Criar implantação dentro do grupo e selecionar caminho URL do app no bucket S3
 
-*IMPORTANTE* Caso usado mais de uma instância verificar grupos de auto scaling dentro do grupo da aplicação
+*IMPORTANTE:* Caso usado mais de uma instância verificar grupos de auto scaling dentro do grupo da aplicação
